@@ -1,10 +1,9 @@
 FROM 		golang:1.12-alpine as builder
 WORKDIR		/go
 ADD			app.go .
-RUN			go build -o app
+RUN			CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o app
 
 
-FROM 		alpine:latest
-WORKDIR 	/go/
-COPY 		--from=builder /go/app .
-ENTRYPOINT  /go/app
+FROM 		scratch
+COPY 		--from=builder /go/app /app
+ENTRYPOINT  ["/app"]
