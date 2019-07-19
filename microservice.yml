@@ -1,28 +1,95 @@
 omg: 1
 info:
   version: 1.0.0
-  title: Your microservice
-  description: Describe your microservice
+  title: Kubernetes
+  description: An OMG service for talking to a Kubernetes cluster
   license:
     name: Apache 2.0
     url: https://opensource.org/licenses/Apache-2.0
 lifecycle:
   startup:
     command: []
+health:
+  http:
+    path: /health
+    port: 8080
 actions:
-  message:
+  createjob:
     http:
-      path: /message
+      path: /createJob
       method: post
       port: 8080
     arguments:
+      namespace:
+        type: string
+        required: true
+        in: requestBody
       name:
         type: string
+        required: true
+        in: requestBody
+      spec:
+        type: map
         required: true
         in: requestBody
     output:
       contentType: application/json
       type: object
       properties:
-        message:
-          type: string
+      help: |
+        The submitted Job Object
+  createSecret:
+    http:
+      path: /secret
+      method: post
+      port: 8080
+    arguments:
+      namespace:
+        type: string
+        required: true
+        in: requestBody
+      name:
+        type: string
+        required: true
+        in: requestBody
+      secret:
+        type: map
+        required: true
+        in: requestBody
+    output:
+      contentType: application/json
+      type: object
+      properties:
+      help: |
+        The created Secret Object
+  updateSecret:
+    http:
+      path: /secret
+      method: put
+      port: 8080
+    arguments:
+      namespace:
+        type: string
+        required: true
+        in: requestBody
+      name:
+        type: string
+        required: true
+        in: requestBody
+      secret:
+        type: map
+        required: true
+        in: requestBody
+    output:
+      contentType: application/json
+      type: object
+      properties:
+      help: |
+        The updated Secret Object
+# environment:
+#   access_token:
+#     type: string
+#     pattern: "^key_"
+#     required: true
+#     help: |
+#       Description of how the user should produce this variable
