@@ -11,6 +11,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
+	// "k8s.io/client-go/pkg/client"
 )
 
 func healthHandler() http.HandlerFunc {
@@ -33,15 +34,24 @@ func getConfigForKube() (*rest.Config, error) {
 
 	// use the current context in kubeconfig
 	return clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	// clientcmd.BuildConfigFromKubeconfigGetter()
+	// clientcmd.api.Config
+}
 
+func authenticateKube() {
+	clientcmd.Load([]byte(os.Getenv("kubeconfig")))
 }
 
 func main() {
-	config, err := getConfigForKube()
+	config, err := clientcmd.RESTConfigFromKubeConfig([]byte(os.Getenv("kubeconfig")))
+
+	// config, err := clientcmd.Load([]byte(os.Getenv("kubeconfig")))
+	// config, err := getConfigForKube()
 	if err != nil {
 		panic(err.Error())
 	}
 
+	// kubernetes.New
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())

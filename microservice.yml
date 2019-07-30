@@ -9,12 +9,17 @@ info:
 lifecycle:
   startup:
     command: []
+environment:
+  kubeconfig:
+    type: string
+    required: true
+    help: Description of how the user should produce this variable
 health:
   http:
     path: /health
     port: 8080
 actions:
-  createjob:
+  create_job:
     http:
       path: /createJob
       method: post
@@ -33,12 +38,9 @@ actions:
         required: true
         in: requestBody
     output:
-      contentType: application/json
-      type: object
-      properties:
-      help: |
-        The submitted Job Object
-  createSecret:
+      type: map
+
+  create_secret:
     http:
       path: /secret
       method: post
@@ -57,12 +59,9 @@ actions:
         required: true
         in: requestBody
     output:
-      contentType: application/json
-      type: object
-      properties:
-      help: |
-        The created Secret Object
-  updateSecret:
+      type: map
+
+  update_secret:
     http:
       path: /secret
       method: put
@@ -81,11 +80,8 @@ actions:
         required: true
         in: requestBody
     output:
-      contentType: application/json
-      type: object
-      properties:
-      help: |
-        The updated Secret Object
+      type: map
+
 # environment:
 #   access_token:
 #     type: string
