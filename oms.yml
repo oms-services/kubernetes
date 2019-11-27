@@ -1,11 +1,15 @@
-omg: 1
+oms: 1
 info:
   version: 1.0.0
   title: Kubernetes
   description: An OMG service for talking to a Kubernetes cluster
   license:
     name: Apache 2.0
-    url: https://opensource.org/licenses/Apache-2.0
+    url: 'https://opensource.org/licenses/Apache-2.0'
+  contact:
+    name: Open Microservices
+    url: 'https://openmicroservices.org'
+    email: core@openmicroservices.org
 lifecycle:
   startup:
     command: []
@@ -39,7 +43,6 @@ actions:
         in: requestBody
     output:
       type: map
-
   create_secret:
     http:
       path: /secret
@@ -60,7 +63,6 @@ actions:
         in: requestBody
     output:
       type: map
-
   update_secret:
     http:
       path: /secret
@@ -81,11 +83,3 @@ actions:
         in: requestBody
     output:
       type: map
-
-# environment:
-#   access_token:
-#     type: string
-#     pattern: "^key_"
-#     required: true
-#     help: |
-#       Description of how the user should produce this variable
